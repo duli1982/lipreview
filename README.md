@@ -46,7 +46,6 @@ A free, open source, online tool to write, format, and preview your LinkedIn pos
 
 - Node, recommended `20.x`
 - pnpm, recommended `8.14.0`
-- PostgreSQL, recommended `14.x` (optional if you don't need all the functionalities)
 - [Visual Studio Code](https://code.visualstudio.com/) with [recommended extensions](.vscode/extensions.json)
 - Optionally [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
 
@@ -60,19 +59,8 @@ cd linkedinpreview.com
 pnpm install
 ```
 
-Create a `.env.local` file based on the provided `.env.example` file and fill in the necessary variables.
-
-OR you can skip this by modifying `apps/web/src/env.ts`:
-
-```ts
-export const env = createEnv({
-    skipValidation: true,
-
-    server: {
-        // ...
-    },
-})
-```
+Create a `.env.local` file by copying `.env.example`. The primary variable you'll need to set is `NEXT_PUBLIC_GTM_MEASUREMENT_ID` for Google Tag Manager, though you can leave it empty if you don't intend to use GTM.
+The environment variable validation is handled by `env.mjs` at the project root using `@t3-oss/env-nextjs`. For local development, if you need to temporarily bypass validation, you can set `skipValidation: true` in `env.mjs`, but this is not recommended for production.
 
 To run the app in development mode:
 
@@ -81,6 +69,10 @@ pnpm dev
 ```
 
 The app will be available at `localhost:3000`.
+
+## 🗒️ Development Notes
+
+- Before running `pnpm type-check`, ensure you have built the project at least once (e.g., via `pnpm build` or by starting the dev server with `pnpm dev` which runs `contentlayer dev`). This step is necessary to generate types for `contentlayer/generated`.
 
 ## ✍🏻 Author
 
